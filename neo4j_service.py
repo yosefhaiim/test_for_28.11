@@ -50,3 +50,35 @@ class DeviceRepository:
                 })
                 # החזרת מזהה אינטרקציה החדשה
                 return result.single()['interaction_id']
+
+
+# TODO: Expose flask’s endpoint for finding all devices connected
+#  to each other using the Bluetooth method,
+#  and how long is the path.
+# חשוף את נקודת הקצה של הבקבוק למציאת כל ההתקנים המחוברים
+# # זה לזה בשיטת Bluetooth,
+# # וכמה אורך הדרך.
+
+    def get_interaction_bluetooth(self, interaction_id):
+        with self.driver.session() as session:
+            # שאילתה ב-Cypher לשליפת נתוני הטרנזקציה
+            query = """
+            MATCH (start:Device)
+            MATCH (end:Device)
+            WHERE start <> end
+            MATCH path = shortestPath((start)-[:INTERACTED_WITH*]->(end))
+            WHERE ALL(r IN relationships(path) WHERE r.method = 'Bluetooth')
+            WITH path, length(path) as pathLength
+            ORDER BY pathLength DESC
+            LIMIT 1
+            RETURN length(path)
+            """
+            # הפעלת השאילתה עם מזהה אינטרקציה כפרמטר
+            result = session.run(query, {'interaction_id': interaction_id})
+            record = result.single()  # קבלת התוצאה (שורה אחת בלבד)
+            if record:
+                # אם נמצאה אינטרקציה, להחזיר את הנתונים כמילון
+                return dict(record)
+            # אם לא נמצאה אינטרקציה, להחזיר None
+            return None
+

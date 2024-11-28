@@ -17,16 +17,12 @@ def get_interaction():
 # TODO: Step 4: Run the Flask Application
 #  Run your Flask application and then run the phone dispatcher.
 #  Print request body as written above.
-
-
-# todo: Expose a Flask endpoint to count how many devices are
-#  connected to a specific device based on a provided ID.
-# חשוף נקודת קצה Flask כדי לספור כמה מכשירים מחוברים למכשיר ספציפי על סמך מזהה שסופק.
-
+# work!!!!!!!!!
 
 # todo: Expose a Flask endpoint to determine whether
 #  there is a direct connection between two devices.
 # חשוף נקודת קצה Flask כדי לקבוע אם יש חיבור ישיר בין שני התקנים.
+
 
 # todo: Expose a Flask endpoint to fetch the most recent interaction for a specific device,
 #  sorted by timestamp.

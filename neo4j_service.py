@@ -90,7 +90,7 @@ class DeviceRepository:
         with self.driver.session() as session:
             query = """
             MATCH (source)-[c:CONNECTION {interaction_id: $interaction_id}]->(target)
-            WHERE c.signal_strength_dbm < -60
+            WHERE c.signal_strength_dbm > -60
             RETURN c.interaction_id as interaction_id
             """
             # הפעלת השאילתה עם מזהה אינטרקציה כפרמטר
@@ -99,5 +99,24 @@ class DeviceRepository:
             if record:
                 # אם נמצאה אינטרקציה, להחזיר את הנתונים כמילון
                 return dict(record)
+            # אם לא נמצאה אינטרקציה, להחזיר None
+            return None
+
+# todo: Expose a Flask endpoint to count how many devices are
+#  connected to a specific device based on a provided ID.
+# חשוף נקודת קצה Flask כדי לספור כמה מכשירים מחוברים למכשיר ספציפי על סמך מזהה שסופק.
+
+    def get_interaction_with_device(self, device_id):
+        with self.driver.session() as session:
+            # אני צריך שכאשר האינטרקציה במיקום של ממכשיר (from_device),
+            # או במיקום של למכשיר(to_device),
+            # שווה לID שהוכנס המכשיר הזה יכנס לרשימה שבה יוצגו כל המכשירים
+            query = """
+            
+            """
+            result = session.run(query, {'device_id': device_id})
+            if result:
+                # אם נמצאה אינטרקציה, להחזיר את הנתונים כמילון
+                return dict(result)
             # אם לא נמצאה אינטרקציה, להחזיר None
             return None

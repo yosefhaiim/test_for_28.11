@@ -43,3 +43,28 @@ def create_interaction():
         # החזרת תגובה עם הודעת שגיאה
         return jsonify({'error': 'internal server error'}), 500
 
+
+# endpoint for get interaction by bluetooth
+@interaction_up.route('/api/interaction_bluetooth/<interaction_id>', methods=['GET'])
+def get_interaction_bluetooth():
+    interaction_id = request.args.get('interaction_id')
+    repo = DeviceRepository(current_app.neo4j_driver)
+    interaction = repo.get_interaction_bluetooth(interaction_id)
+    return jsonify({'interaction': interaction}), 200
+
+
+# endpoint for get interaction if signal_strength_dbm > -60
+@interaction_up.route('/api/interaction/<interaction_id>', methods=['GET'])
+def get_interaction_big_from_60():
+    interaction_id = request.args.get('interaction_id')
+    repo = DeviceRepository(current_app.neo4j_driver)
+    interaction = repo.get_interaction_big_from_60(interaction_id)
+    return jsonify({'interaction': interaction}), 200
+
+# endpoint for get more devices if they connected with this device
+@interaction_up.route('/api/interaction/<interaction_id>', methods=['DELETE'])
+def get_interaction_with_device():
+    interaction_id = request.args.get('interaction_id')
+    repo = DeviceRepository(current_app.neo4j_driver)
+    interactions = list(repo.get_interaction_with_device(interaction_id))
+    return jsonify({'interactions': interactions}), 200

@@ -23,23 +23,7 @@ def get_interaction():
 # להריץ את האפליקציה, לא עבד ננסה יותר מאוחר
 
 
-# TODO: Initiate data and create nodes and relationships for every call interaction:
-#  Create nodes for each device, labeled as Device.
-#  Create a relationship labeled CONNECTED between the two devices.
-#  Store the interaction details (e.g.,location).
-#  You should choose where is the right place to store additional data ( node’s properties or relations’s )
-# התחל נתונים וצור צמתים וקשרים לכל אינטראקציה של שיחה:
-# צור צמתים עבור כל מכשיר, המסומנים כמכשיר.
-# צור קשר עם התווית CONNECTED בין שני המכשירים.
-# אחסן את פרטי האינטראקציה (למשל, מיקום).
-# עליך לבחור היכן המקום הנכון לאחסון נתונים נוספים (מאפייני הצומת או היחסים של הצומת)
-def init_neo4j():
-   # יצירת אובייקט Driver המתחבר ל- Neo4j באמצעות פרוטוקול Bolt
-   neo4j_driver = GraphDatabase.driver(
-      "bolt://neo4j:7687",
-      auth=("neo4j", "password")
-   )
-   return neo4j_driver
+
 
 
 # TODO: Expose flask’s endpoint for finding all devices connected

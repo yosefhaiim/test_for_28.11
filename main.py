@@ -17,7 +17,7 @@ def get_interaction():
 # TODO: Step 4: Run the Flask Application
 #  Run your Flask application and then run the phone dispatcher.
 #  Print request body as written above.
-# להריץ את האפליקציה, לא עבד ננסה יותר מאוחר
+
 
 # todo: Expose a Flask endpoint to count how many devices are
 #  connected to a specific device based on a provided ID.

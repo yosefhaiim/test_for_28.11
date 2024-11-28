@@ -50,23 +50,3 @@ class DeviceRepository:
                 })
                 # החזרת מזהה אינטרקציה החדשה
                 return result.single()['interaction_id']
-
-        # def get_interaction(self, interaction_id):
-        #     with self.driver.session() as session:
-        #         # שאילתה ב-Cypher לשליפת נתוני הטרנזקציה
-        #         query = """
-        #         MATCH (source)-[t:TRANSACTION {transaction_id: $transaction_id}]->(target)
-        #         RETURN source.account_id as source_id,
-        #                target.account_id as target_id,
-        #                t.amount as amount,
-        #                t.timestamp as timestamp,
-        #                t.currency as currency
-        #         """
-        #         # הפעלת השאילתה עם מזהה הטרנזקציה כפרמטר
-        #         result = session.run(query, {'transaction_id': transaction_id})
-        #         record = result.single()  # קבלת התוצאה (שורה אחת בלבד)
-        #         if record:
-        #             # אם נמצאה טרנזקציה, להחזיר את הנתונים כמילון
-        #             return dict(record)
-        #         # אם לא נמצאה טרנזקציה, להחזיר None
-        #         return None

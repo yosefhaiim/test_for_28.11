@@ -1,17 +1,14 @@
-import phone_dispatcher
 from flask import request, jsonify, Blueprint
 import requests
-from neo4j import GraphDatabase
-
-from app import phone_blueprint
 
 
+phone_blueprint = Blueprint('phone_blueprint', __name__)
 # TODO: Step 3: Create the Flask Application
 #  Create your own Flask app to handle POST requests from the phone_dispatcher
 #  and process the incoming JSON payload
 #  Create routes folder and a specific route handling phone_dispatcher:
 
-@phone_blueprint.route("/api/phone_tracker", methods=['POST'])
+@phone_blueprint.route("/phone_tracker", methods=['POST'])
 def get_interaction():
    print(request.json)
    return jsonify({ }), 200
@@ -21,24 +18,6 @@ def get_interaction():
 #  Run your Flask application and then run the phone dispatcher.
 #  Print request body as written above.
 # להריץ את האפליקציה, לא עבד ננסה יותר מאוחר
-
-
-
-
-
-# TODO: Expose flask’s endpoint for finding all devices connected
-#  to each other using the Bluetooth method,
-#  and how long is the path.
-# חשוף את נקודת הקצה של הבקבוק למציאת כל ההתקנים המחוברים
-# # זה לזה בשיטת Bluetooth,
-# # וכמה אורך הדרך.
-
-
-
-# TODO: Expose flask’s endpoint for finding all devices connected to each other
-#  with a signal strength stronger than -60.
-# חשוף את נקודת הקצה של הבקבוק למציאת כל ההתקנים המחוברים זה לזה עם עוצמת אות חזקה מ-60.
-
 
 # todo: Expose a Flask endpoint to count how many devices are
 #  connected to a specific device based on a provided ID.

@@ -61,7 +61,7 @@ class DeviceRepository:
 
     def get_interaction_bluetooth(self, interaction_id):
         with self.driver.session() as session:
-            # שאילתה ב-Cypher לשליפת נתוני הטרנזקציה
+            # שאילתה ב-Cypher לשליפת נתוני האינטרקציה
             query = """
             MATCH (start:Device)
             MATCH (end:Device)
@@ -82,3 +82,22 @@ class DeviceRepository:
             # אם לא נמצאה אינטרקציה, להחזיר None
             return None
 
+# TODO: Expose flask’s endpoint for finding all devices connected to each other
+#  with a signal strength stronger than -60.
+# חשוף את נקודת הקצה של הבקבוק למציאת כל ההתקנים המחוברים זה לזה עם עוצמת אות חזקה מ-60.
+
+    def get_interaction_big_from_60(self, interaction_id):
+        with self.driver.session() as session:
+            query = """
+            MATCH (source)-[c:CONNECTION {interaction_id: $interaction_id}]->(target)
+            WHERE c.signal_strength_dbm < -60
+            RETURN c.interaction_id as interaction_id
+            """
+            # הפעלת השאילתה עם מזהה אינטרקציה כפרמטר
+            result = session.run(query, {'interaction_id': interaction_id})
+            record = result.single()  # קבלת התוצאה (שורה אחת בלבד)
+            if record:
+                # אם נמצאה אינטרקציה, להחזיר את הנתונים כמילון
+                return dict(record)
+            # אם לא נמצאה אינטרקציה, להחזיר None
+            return None
